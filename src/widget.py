@@ -1,39 +1,35 @@
-from masks import get_mask_card_number, get_mask_account
 from datetime import datetime
+from typing import Union
+
+from src.masks import get_mask_account, get_mask_card_number
 
 
-def mask_account_card(info: str) -> str:
+def mask_account_card(card_or_account: str) -> str:
     """
-    Маскирует номер карты или счета на основе типа.
-
-    Args:
-        info (str): строка вида "Visa Platinum 7000792289606361" или "Счет 73654108430135874305"
-
-    Returns:
-        str: строка с замаскированным номером, например "Visa Platinum 7000 79** **** 6361"
+    Принимает строку типа "Visa Platinum 7000792289606361"
+    или "Счет 7365410843013587"
+    и возвращает замаскированную строку.
     """
-    parts = info.split(" ", 1)
-    if len(parts) != 2:
-        raise ValueError("Некорректный формат строки")
-    card_type, number = parts[0], parts[1]
+    parts = card_or_account.split()
+    if len(parts) < 2:
+        raise ValueError("Неверный формат строки")
 
-    if card_type.lower() == "счет" or card_type.lower() == " счет":
-        masked_number = get_mask_account(number)
-        return f"{card_type} {masked_number}"
+    number = parts[-1]
+    if "счет" in card_or_account.lower():
+        return " ".join(parts[:-1]) + " " + get_mask_account(number)
     else:
-        masked_number = get_mask_card_number(number)
-        return f"{card_type} {masked_number}"
+        return " ".join(parts[:-1]) + " " + get_mask_card_number(number)
 
 
 def get_date(date_str: str) -> str:
     """
-    Преобразует строку даты из формата ISO 8601 в формат "ДД.ММ.ГГГГ".
-
-    Args:
-        date_str (str): строка вида "2024-03-11T02:26:18.671407"
-
-    Returns:
-        str: дата в формате "11.03.2024"
+    Принимает строку даты в ISO-формате
+    (например, "2024-03-11T02:26:18.671407")
+    и возвращает в формате "ДД.ММ.ГГГГ".
     """
-    dt = datetime.fromisoformat(date_str)
-    return f"{dt.day:02d}.{dt.month:02d}.{dt.year}"
+    try:
+        dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
+        return dt.strftime("%d.%m.%Y")
+    except ValueError:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        return dt.strftime("%d.%m.%Y")
