@@ -33,16 +33,18 @@ from src.processing import filter_by_state, sort_by_date
 
 transactions = [...]  # Пример из задания
 
-"#"Фильтрация по 'EXECUTED' (не забудьте убрать кавычки вокруг хэштэга)
+"#"Фильтрация по 'EXECUTED' (не забудь убрать кавычки вокруг хэштэга)
 filtered = filter_by_state(transactions)
 print(filtered)  # [{'id': 41428829, ...}, {'id': 939719570, ...}]
 
-"#"Сортировка по дате (убывание)(не забудьте убрать кавычки вокруг хэштэга)
+"#"Сортировка по дате (убывание)(не забудь убрать кавычки вокруг хэштэга)
 sorted_trans = sort_by_date(transactions)
 print(sorted_trans)  # [{'id': 41428829, ...}, {'id': 615064591, ...}, ...]
 
 
 ## Структура проекта
 src/: Основной код (masks.py, widget.py, processing.py).
+
 tests/: Тесты (пока пусто).
+
 main.py: Пример запуска (пока пусто).

@@ -8,4 +8,4 @@ transactions = [
 ]
 
 print(filter_by_state(transactions))  # Должен вывести EXECUTED
-print(sort_by_date(transactions))     # Должен отсортировать по убыванию
+print(sort_by_date(transactions))  # Должен отсортировать по убыванию
