@@ -1,15 +1,29 @@
 # Bank Operations Widget
 
-## Цель проекта
-Это виджет для обработки банковских операций:
-маскировка номеров карт/счетов, форматирование дат,
-фильтрация и сортировка транзакций.
-Разработан на Python с использованием Poetry, следует PEP8 и GitFlow.
+Этот проект представляет собой набор модулей для обработки банковских транзакций,
+маскирования данных и генерации различных элементов. 
+
+Он написан на Python и использует современные практики разработки 
+(тесты с pytest, линтеры, типизация).
 
 
+## Описание
+
+Проект включает модули для:
+
+Маскирования номеров карт и счетов (masks).
+
+Форматирования виджетов для отображения транзакций (widget).
+
+Обработки и фильтрации транзакций (processing).
+
+Генерации данных и итераторов для транзакций (generators).
+
+Все модули поддерживают типизацию (mypy) и покрыты тестами с использованием pytest.
 
 
 ## Установка
+
 1. Клонируй репозиторий:
 https://github.com/GavrikovaAlena/bank-widget-homework.git
 
@@ -17,50 +31,109 @@ https://github.com/GavrikovaAlena/bank-widget-homework.git
 poetry install
 
 
-
 ## Использование
+
 Импортируй модули из `src/`.
 
-### Маскировка (masks.py и widget.py)
-from src.widget import mask_account_card, get_date
+### Модуль masks
+#### Модуль для маскирования номеров карт и счетов.
 
-print(mask_account_card("Visa Platinum 7000792289606361"))  # "Visa Platinum 7000 79** **** 6361"
-print(get_date("2024-03-11T02:26:18.671407"))              # "11.03.2024"
+from src.masks import get_mask_card_number, get_mask_account
+
+#Маскировка номера карты
+masked_card = get_mask_card_number("7000792289606361")  # Вывод: 7000 79** **** 6361
+
+#Маскировка номера счета
+masked_account = get_mask_account("73654108430135874305")  # Вывод: **4305
 
 
-### Обработка транзакций (processing.py)
+### Модуль widget
+#### Модуль для форматирования виджетов транзакций.
+
+from src.widget import get_date, mask_account_card
+
+#Форматирование даты
+formatted_date = get_date("2024-03-11T02:26:18.671407")  # Вывод: 11.03.2024
+
+#Маскировка счета или карты в виджете
+masked = mask_account_card("Maestro 1596837868705199")  # Вывод: Maestro 1596 83** **** 5199
+masked_account = mask_account_card("Счет 64686473678894779589")  # Вывод: Счет **9589
+
+
+### Модуль processing
+#### Модуль для обработки списка транзакций (фильтрация по дате, статусу и т.д.).
+
 from src.processing import filter_by_state, sort_by_date
 
-transactions = [...]  # Пример из задания
+#Фильтрация по статусу
+executed = filter_by_state(transactions, "EXECUTED")
 
-"#"Фильтрация по 'EXECUTED' (не забудь убрать кавычки вокруг хэштэга)
-filtered = filter_by_state(transactions)
-print(filtered)  # [{'id': 41428829, ...}, {'id': 939719570, ...}]
+#Сортировка по дате
+sorted_transactions = sort_by_date(transactions, descending=True)
 
-"#"Сортировка по дате (убывание)(не забудь убрать кавычки вокруг хэштэга)
-sorted_trans = sort_by_date(transactions)
-print(sorted_trans)  # [{'id': 41428829, ...}, {'id': 615064591, ...}, ...]
+
+### Модуль generators
+#### Модуль функуий-генераторов содержит функции-генераторы для эффективной обработки больших объемов данных транзакций
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+
+#Фильтрация по валюте
+usd_transactions = filter_by_currency(transactions, "USD")
+print(next(usd_transactions))  # Первая транзакция в USD
+
+#Генератор описаний
+descriptions = transaction_descriptions(transactions)
+print(next(descriptions))  # Описание первой транзакции
+
+#Генератор номеров карт
+for card in card_number_generator(1, 5):
+    print(card)  # 0000 0000 0000 0001 и т.д.
 
 
 ## Структура проекта
-src/: Основной код (masks.py, widget.py, processing.py).
+```
+project/
+├── htmlcov/              # Отчет покрытия (добавляется для сдачи)
+├── src/
+│   ├── __init__.py
+│   ├── masks.py            # Модуль маскирования
+│   ├── widget.py           # Модуль виджетов
+│   ├── processing.py       # Модуль обработки транзакций
+│   └── generators.py       # Модуль генераторов
+├── tests/
+│   ├── __init__.py
+│   ├── test_masks.py       # Тесты для функций маскирования карт и счетов
+│   ├── test_widget.py      # Тесты для функций форматирования и дат
+│   ├── test_processing.py  # Тесты для фильтрации и сортировки транзакций
+│   └── test_generators.py  # Тесты для генераторов фильтрации по валюте, генерации описаний транзакций и номеров карт
+├── .flake8
+├── .gitignore
+├── main.py
+├── poetry.lock
+├── pyproject.toml
+└── README.md
+```
 
-tests/: Тесты (test_masks.py, test_widget.py, test_processing.py).
-
-main.py: Пример запуска (пока пусто).
 
 ## Тестирование
 
-Проект использует pytest для автоматизированного тестирования. Тесты покрывают все основные функции и обеспечивают покрытие кода более 80%.
+Проект использует pytest для автоматизированного тестирования. 
+
+Тесты покрывают все основные функции и обеспечивают покрытие кода более 80%.
+
+Тесты используют фикстуры для генерации данных и параметризацию для проверки различных сценариев.
+
 
 ### Запуск тестов
+
 - Установите зависимости: poetry install
 - Запустите тесты: pytest
 - С отчётом покрытия: pytest --cov=src --cov-report=html (отчёт в htmlcov/index.html)
 
-### Структура тестов
-- tests/test_masks.py: Тесты для функций маскирования карт и счетов.
-- tests/test_widget.py: Тесты для функций форматирования и дат.
-- tests/test_processing.py: Тесты для фильтрации и сортировки транзакций.
 
-Тесты используют фикстуры для генерации данных и параметризацию для проверки различных сценариев.
+### Линтеры и типизация
+mypy: Проверка типов: mypy src/
+
+flake8: Проверка стиля: flake8 src/ tests/ (не более 5 ошибок)
+
+isort: Форматирование импортов: isort src/ tests/ (не более 1 изменения)
+
