@@ -32,5 +32,5 @@ def get_mask_account(account: Union[str, int]) -> str:
     if len(account_str) > 20:
         raise ValueError("Слишком длинный номер счета")
 
-    masked = "**" + account_str[-4:]  # Исправлено: добавляем "**"
+    masked = "**" + account_str[-4:]
     return masked
