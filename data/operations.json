@@ -1,0 +1,121 @@
+[
+  {
+    "id": 441945886,
+    "state": "EXECUTED",
+    "date": "2019-08-26T10:50:58.294041",
+    "operationAmount": {
+      "amount": "31957.58",
+      "currency": {
+        "name": "руб.",
+        "code": "RUB"
+      }
+    },
+    "description": "Перевод организации",
+    "from": "Maestro 1596837868705199 → Счет 64686473678894779589",
+    "to": "Счет 64686473678894779589"
+  },
+  {
+    "id": 41428829,
+    "state": "EXECUTED",
+    "date": "2019-07-03T18:35:29.512364",
+    "operationAmount": {
+      "amount": "8221.37",
+      "currency": {
+        "name": "USD",
+        "code": "USD"
+      }
+    },
+    "description": "Перевод со счета на счет",
+    "from": "MasterCard 7158300734726758 → Счет 35383033474447895560",
+    "to": "Счет 35383033474447895560"
+  },
+  {
+    "id": 939719570,
+    "state": "CANCELED",
+    "date": "2018-06-30T02:08:58.425572",
+    "operationAmount": {
+      "amount": "9824.07",
+      "currency": {
+        "name": "EUR",
+        "code": "EUR"
+      }
+    },
+    "description": "Перевод с карты на карту (отменён)",
+    "from": "Visa Classic 6831982476737658 → Visa Platinum 8990922113665229",
+    "to": "Visa Platinum 8990922113665229"
+  },
+  {
+    "id": 123456789,
+    "state": "EXECUTED",
+    "date": "2023-10-15T14:22:15.123456",
+    "operationAmount": {
+      "amount": "15000.00",
+      "currency": {
+        "name": "руб.",
+        "code": "RUB"
+      }
+    },
+    "description": "Открытие вклада",
+    "to": "Счет 12345678901234567890"
+  },
+  {
+    "id": 987654321,
+    "state": "EXECUTED",
+    "date": "2023-11-01T09:45:30.789012",
+    "operationAmount": {
+      "amount": "500.50",
+      "currency": {
+        "name": "USD",
+        "code": "USD"
+      }
+    },
+    "description": "Снятие наличных",
+    "from": "Visa Gold 1234567890123456 → ATM",
+    "to": "ATM"
+  },
+  {
+    "id": 555666777,
+    "state": "EXECUTED",
+    "date": "2022-05-20T16:30:45.678901",
+    "operationAmount": {
+      "amount": "2500.75",
+      "currency": {
+        "name": "EUR",
+        "code": "EUR"
+      }
+    },
+    "description": "Перевод организации",
+    "from": "Visa Platinum 9876543210987654 → Счет 98765432109876543210",
+    "to": "Счет 98765432109876543210"
+  },
+  {
+    "id": 111222333,
+    "state": "EXECUTED",
+    "date": "2023-12-05T11:15:20.345678",
+    "operationAmount": {
+      "amount": "100000.00",
+      "currency": {
+        "name": "руб.",
+        "code": "RUB"
+      }
+    },
+    "description": "Перевод со счета на карту",
+    "from": "Счет 11111111111111111111 → Maestro 2222333344445555",
+    "to": "Maestro 2222333344445555"
+  },
+  {
+    "id": 444555666,
+    "state": "CANCELED",
+    "date": "2021-03-10T20:55:10.901234",
+    "operationAmount": {
+      "amount": "750.25",
+      "currency": {
+        "name": "USD",
+        "code": "USD"
+      }
+    },
+    "description": "Перевод с карты (отменён)",
+    "from": "MasterCard 5555666677778888 → Счет 99999999999999999999",
+    "to": "Счет 99999999999999999999"
+  }
+]
